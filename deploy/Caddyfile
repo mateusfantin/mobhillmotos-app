@@ -1,0 +1,22 @@
+# SITE_ADDRESS=":80"            -> só HTTP, acesso pelo IP (para testar)
+# SITE_ADDRESS="seudominio.com.br" -> HTTPS automático e gratuito (Let's Encrypt)
+{$SITE_ADDRESS} {
+	encode zstd gzip
+
+	request_body {
+		max_size 60MB
+	}
+
+	# API e fotos vão para o Spring Boot
+	handle /api/* {
+		reverse_proxy backend:8080
+	}
+	handle /uploads/* {
+		reverse_proxy backend:8080
+	}
+
+	# Todo o resto é o site (React/TanStack Start)
+	handle {
+		reverse_proxy frontend:3000
+	}
+}

@@ -1,0 +1,8 @@
+target/
+uploads/
+local.properties
+.settings/
+.classpath
+.project
+.mvn/wrapper/maven-wrapper.jar
+deploy/
